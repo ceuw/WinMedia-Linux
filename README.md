@@ -104,7 +104,7 @@ GUI smoke tests use `pytest-qt` (offscreen where supported).
 .
 ├── AGENTS.md                 # Development/safety contract
 ├── README.md
-├── LICENSE                   # GPL-3.0-or-later
+├── LICENSE                   # MIT
 ├── pyproject.toml
 ├── requirements.txt
 ├── docs/
@@ -141,7 +141,7 @@ Contributions should follow [`AGENTS.md`](AGENTS.md): prioritize data safety, ke
 
 ## License
 
-Licensed under **GPL-3.0-or-later**. See [`LICENSE`](LICENSE).
+Licensed under the **MIT License**. See [`LICENSE`](LICENSE).
 
 ## Disclaimer
 
