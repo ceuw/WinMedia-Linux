@@ -1,0 +1,24 @@
+pkgbase = winmedia-linux
+	pkgdesc = Linux-native PySide6 app for Windows installation media workflows (safety-gated)
+	pkgver = 0.1.0
+	pkgrel = 1
+	url = https://github.com/ceuw/WinMedia-Linux
+	arch = any
+	license = MIT
+	makedepends = python-build
+	makedepends = python-installer
+	makedepends = python-setuptools
+	makedepends = python-wheel
+	depends = python
+	depends = pyside6
+	optdepends = util-linux: device information (lsblk)
+	optdepends = udisks2: disk management integration
+	optdepends = parted: partitioning tools
+	optdepends = dosfstools: FAT filesystem tools
+	optdepends = ntfs-3g: NTFS support
+	optdepends = wimlib: WIM/SWM handling (wimlib-imagex)
+	options = !emptydirs
+	source = winmedia-linux-0.1.0.tar.gz::https://github.com/ceuw/WinMedia-Linux/archive/refs/tags/v0.1.0.tar.gz
+	sha256sums = SKIP
+
+pkgname = winmedia-linux
