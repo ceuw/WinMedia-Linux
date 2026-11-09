@@ -63,6 +63,13 @@ This log tracks what has been implemented, what is in progress, and what remains
 - Working tree clean; full test suite **31 passed**; GUI smoke test passed.
 - Project finalized in a **safety-gated** state: safe UI/detection/ISO/verification/planning workflows implemented; destructive USB execution and official bootability remain intentionally gated/unclaimed pending verified Linux hardware validation.
 
+### 2026-11-09 — Release, docs, tracking, and maintenance
+- **GitHub Release published**: `v0.1.0 - Safety-gated foundation release` created for existing tag `v0.1.0` on `ceuw/WinMedia-Linux` (https://github.com/ceuw/WinMedia-Linux/releases/tag/v0.1.0).
+- **README rewritten** (`facd7ec`): professional GitHub presentation with accurate safety/status, limitations, usage, testing, layout, and disclaimer. Tests: **31 passed**.
+- **GitHub issues created** (tracking known safety-gated work): [#1](https://github.com/ceuw/WinMedia-Linux/issues/1) verified official Microsoft ISO download resolution; [#2](https://github.com/ceuw/WinMedia-Linux/issues/2) guarded destructive USB creation on verified Linux hardware; [#3](https://github.com/ceuw/WinMedia-Linux/issues/3) boot/media verification workflow (no unverified bootability claims).
+- **License changed to MIT** (`5b58dbf`): `LICENSE`, `pyproject.toml` metadata/classifier, and `README.md` updated. Historical `LOG.md` entry noting the original GPL notice was left unchanged for accuracy. Tests: **31 passed**.
+- **Process/docs updated**: `AGENTS.md` reinforced to require **frequent `LOG.md` updates** and **very frequent pushes to GitHub**; `HANDOFF.md` and `LOG.md` refreshed to current repo/release/issue/license state.
+
 ## Maintenance (if continuing)
 
 - Keep `LOG.md` and `HANDOFF.md` updated for any future changes and push frequently.

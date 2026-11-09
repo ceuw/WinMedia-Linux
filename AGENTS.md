@@ -339,7 +339,9 @@ Before implementing a feature:
 6. Implement incrementally.
 7. Add or update tests.
 8. Run the relevant test suite.
-9. Update documentation.
+9. Update documentation, including `LOG.md` and `HANDOFF.md` when project state changes.
+
+After completing each meaningful task (and at frequent checkpoints during longer work), update `LOG.md` with what changed, what was verified, and any limitations, then commit and push to GitHub. Keep the remote repository current.
 
 Do not rewrite functioning components without a clear reason.
 
@@ -446,8 +448,9 @@ Examples:
 
 ### Push Policy
 
-- Push completed and tested work to GitHub regularly.
-- Do not wait until the entire project is finished.
+- **Update `LOG.md` frequently** (after meaningful changes and at regular checkpoints) so progress and limitations are always clear.
+- **Push to GitHub very frequently** — after each meaningful, tested commit/checkpoint. Do not batch large amounts of work locally.
+- Push completed and tested work to GitHub regularly; do not wait until the entire project is finished.
 - Keep the default branch clean and usable.
 - Never push broken or knowingly incomplete commits as production-ready.
 - Clearly identify unfinished features in commit messages and documentation.
