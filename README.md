@@ -1,4 +1,6 @@
-![WinMedia Linux](assets/images/Logo-banner.png)
+<p align="center">
+  <img src="assets/images/Logo-banner.png" alt="WinMedia Linux" width="720" />
+</p>
 
 # WinMedia Linux
 
