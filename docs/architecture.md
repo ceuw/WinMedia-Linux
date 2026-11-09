@@ -1,4 +1,4 @@
-# Architecture (Phase 1–2 progress)
+# Architecture (Phase 1–3 progress)
 
 ## Overview
 
@@ -15,9 +15,10 @@ Implemented:
 - Application shell, sidebar navigation, dark/light themes, dependency checker, structured logging.
 - **Read-only device detection** (`services.device_detection`): parses `lsblk --json --bytes` on Linux, collects disk info (size, vendor/model, transport, partition table, filesystems, mount points), applies safety flags (reject/flag system/critical mounts, mounted partitions, read-only, non-removable hints). Removable/USB hints come from sysfs/transport fields, **never** from `/dev/sdX` names.
 - **USB page UI**: refreshes scan off the UI thread, displays devices and safety details, allows selection for review only. The "Create installation media" action remains disabled.
+- **ISO management/verification** (`core.iso_manager`, `core.verifier`): local ISO selection/inspection and streaming SHA-256 calculation in a worker. Optional comparison against a user-provided expected digest. Results clearly state local calculation and do not claim authenticity from hash alone.
 
 Not implemented:
-- Official ISO download, ISO verification workflows.
+- Automatic official Microsoft ISO download resolution/workflow (must use official sources only when implemented; no third-party substitution).
 - Partitioning, formatting, bootloader/media creation, WIM splitting, any destructive disk operations (Phase 4+).
 
 ## Safety boundaries
