@@ -1,5 +1,12 @@
 # WinMedia Linux
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
+[![Platform](https://img.shields.io/badge/Platform-Linux-FCC624?logo=linux&logoColor=black)](#requirements)
+[![GUI](https://img.shields.io/badge/GUI-PySide6%20(Qt)-41CD52?logo=qt&logoColor=white)](https://doc.qt.io/qtforpython-6/)
+[![Release](https://img.shields.io/badge/Release-v0.1.0-informational)](https://github.com/ceuw/WinMedia-Linux/releases/tag/v0.1.0)
+[![Status](https://img.shields.io/badge/Status-safety--gated-orange)](#project-status)
+
 **WinMedia Linux** is a Linux-native desktop application for working with Windows installation media workflows, inspired by Microsoft’s Windows Media Creation Tool. It is built with **Python 3.11+** and **PySide6 (Qt)**.
 
 > [!IMPORTANT]
