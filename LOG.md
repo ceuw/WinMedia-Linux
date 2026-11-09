@@ -69,6 +69,7 @@ This log tracks what has been implemented, what is in progress, and what remains
 - **GitHub issues created** (tracking known safety-gated work): [#1](https://github.com/ceuw/WinMedia-Linux/issues/1) verified official Microsoft ISO download resolution; [#2](https://github.com/ceuw/WinMedia-Linux/issues/2) guarded destructive USB creation on verified Linux hardware; [#3](https://github.com/ceuw/WinMedia-Linux/issues/3) boot/media verification workflow (no unverified bootability claims).
 - **License changed to MIT** (`5b58dbf`): `LICENSE`, `pyproject.toml` metadata/classifier, and `README.md` updated. Historical `LOG.md` entry noting the original GPL notice was left unchanged for accuracy. Tests: **31 passed**.
 - **Process/docs updated**: `AGENTS.md` reinforced to require **frequent `LOG.md` updates** and **very frequent pushes to GitHub**; `HANDOFF.md` and `LOG.md` refreshed to current repo/release/issue/license state.
+- **Arch packaging template added**: `packaging/arch/PKGBUILD` and `packaging/arch/README.md` (AUR/packaging guidance; `pacman -S` requires an official/custom repo — not automatic from GitHub).
 
 ## Maintenance (if continuing)
 
