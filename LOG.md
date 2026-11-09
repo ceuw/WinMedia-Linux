@@ -63,27 +63,17 @@ This log tracks what has been implemented, what is in progress, and what remains
 - Working tree clean; full test suite **31 passed**; GUI smoke test passed.
 - Project finalized in a **safety-gated** state: safe UI/detection/ISO/verification/planning workflows implemented; destructive USB execution and official bootability remain intentionally gated/unclaimed pending verified Linux hardware validation.
 
-## Will do / maintenance (if continuing)
+## Maintenance (if continuing)
 
-- Keep `LOG.md` updated for any future changes and push frequently.
+- Keep `LOG.md` and `HANDOFF.md` updated for any future changes and push frequently.
 - Validate on real Linux hardware/disposable USB media before enabling any destructive execution path.
 - Implement verified official Microsoft download endpoint resolution only if it can be done reliably and in compliance with source policy (no hardcoded expiring URLs, no third-party substitution).
 - Add stronger post-write verification/boot checks when execution is implemented on Linux.
-3. **Shared app state** — keep selected ISO/device state consistent across pages (non-destructive).
-4. **Bootable USB planning/execution (Phase 4, safety-first)** — implement:
-   - plan builder (source ISO, target device, partition/FS/boot mode options) with validation;
-   - explicit confirmation UI showing model/path/capacity and exact planned actions;
-   - system-disk/mount/critical checks and **revalidation immediately before execution**;
-   - Linux-only guarded execution via external tools (`parted`, `mkfs.*`, `mount`, `umount`, `wimlib-imagex`/copy logic as appropriate) using argument arrays; privilege via system mechanisms where feasible — **no stored passwords**;
-   - large `install.wim` handling plan (split for FAT32 when appropriate);
-   - dry-run/preview and robust error reporting;
-   - mock-based tests for planning/validation/command construction. **No destructive tests on real disks.** Real bootability requires Linux hardware verification (cannot be fully claimed from this Windows dev environment).
-5. **Polish & docs** — finalize README/architecture/troubleshooting, record known limitations, ensure dependency/packaging metadata is coherent.
-6. **Git discipline** — run relevant tests, commit meaningful increments, push to configured remote after each milestone/increment (reporting hash/branch/status/issues).
+- Optional: shared app state across pages, packaging optimization (PySide6 footprint), deeper Linux integration tests.
 
 ## Known limitations / honesty notes
 
-- **Official Microsoft download automation**: not fully implemented. Must not hardcode temporary/unauthorized URLs or use third-party ISOs.
-- **Destructive USB creation**: safety-critical and Linux-dependent. Implementation will be guarded and mock-tested, but **real-world bootability and hardware behavior require validation on Linux with disposable media**. This project must not claim success without appropriate verification.
+- **Official Microsoft download automation**: not fully automated. Must not hardcode temporary/unauthorized URLs or use third-party ISOs.
+- **Destructive USB creation**: fail-closed/safety-gated in this build. **Real-world bootability and hardware behavior require validation on Linux with disposable media**. Do not claim success without appropriate verification.
 - **Current dev environment**: Windows; Linux system tools/device behavior are partially simulated via mocks/checks.
 - **PySide6 metapackage** pulls large Qt addons (WebEngine/PDF) in this environment; acceptable for dev, but packaging may be optimized later.
