@@ -4,10 +4,11 @@
 
 ## Repo / environment
 - **Local path (this session):** `C:\Users\Ritam\Desktop\myApp`
-- **Git:** `main` tracks `origin/main` — `https://github.com/ceuw/WinMedia-Linux.git` (HTTPS)
+- **Git:** `main` tracks `origin/main` — `https://github.com/ceuw/WinMedia-Linux.git` (HTTPS); latest pushed commit: `01dc783` (see `git log --oneline -5`).
 - **Current baseline:** safety-gated foundation; tests **31 passed** (`pytest -q`).
 - **Release/tag:** `v0.1.0` tag exists on origin; **GitHub Release published** — https://github.com/ceuw/WinMedia-Linux/releases/tag/v0.1.0
 - **GitHub issues (tracking):** [#1](https://github.com/ceuw/WinMedia-Linux/issues/1) official Microsoft ISO download resolution; [#2](https://github.com/ceuw/WinMedia-Linux/issues/2) guarded destructive USB creation on verified Linux hardware; [#3](https://github.com/ceuw/WinMedia-Linux/issues/3) boot/media verification workflow.
+- **Repo metadata:** description and topics configured; `README.md` includes accurate badges.
 - **License:** MIT (`LICENSE`, `pyproject.toml`, `README.md`).
 - **Dev environment used recently:** Windows + Python 3.14, PySide6, `.venv` at project root (gitignored). **Target platform is Linux.**
 
@@ -17,7 +18,7 @@ Implemented and test-verified:
 - **Read-only USB detection** (Linux `lsblk --json --bytes`): device info, safety flags, review-only selection. Removable/USB hints from sysfs/transport, **never** `/dev/sdX` name alone. No disk writes.
 - **ISO management:** local ISO selection/inspection; resumable HTTP(S) downloader (`.part`/Range, progress/speed/ETA, cancel) with explicit source-responsibility warnings; streaming SHA-256 + optional expected-hash comparison with clear non-authenticity messaging.
 - **USB creation planning (guarded):** validation, system-disk/identity/mount/read-only checks, WIM/FAT32/boot planning notes, explicit confirmation (type target device path), **fail-closed `execute_guarded()`**. **No automatic formatting/writing. Real destructive execution not enabled** in this build.
-- **Docs:** professional `README.md`; `AGENTS.md` requires **frequent `LOG.md` updates** and **very frequent GitHub pushes**.
+- **Docs:** professional `README.md` (with badges); `AGENTS.md` requires **frequent `LOG.md` updates** and **very frequent GitHub pushes**. An Arch `packaging/` template was briefly added and removed at user request.
 
 ## Intentionally NOT done / safety gates (do not “fix” by making unsafe)
 - **Automatic official Microsoft ISO endpoint resolution:** not fully automated. Must use official Microsoft sources only; no hardcoded expiring URLs; no third-party substitution. (Issue #1)
