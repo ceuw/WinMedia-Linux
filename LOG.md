@@ -4,15 +4,15 @@ This log tracks what has been implemented, what is in progress, and what remains
 
 > **Safety contract**: follow `AGENTS.md`. No automatic disk formatting/writes, no root required for normal startup, no fake “complete” functionality, official Microsoft sources only for Windows downloads, and no claim of USB bootability without appropriate verification.
 
-## Status summary (updated 2026-11-09)
+## Status summary (finalized 2026-11-09, safety-gated)
 
 | Area | Status | Notes |
 |---|---|---|
 | Phase 1 Foundation | **Done** | Project structure, PySide6 GUI shell, sidebar nav, dark/light themes (dark default), structured logging, dependency checker, tests, docs. |
 | Phase 2 USB detection | **Done (read-only)** | Linux `lsblk --json` scan, device info, safety flags, selection UI. Removable/USB hint from sysfs/transport, **never** from `/dev/sdX` name alone. No disk writes. Needs real Linux hardware validation. |
-| Phase 3 ISO management | **Partial → in progress** | Local ISO selection/inspection and streaming SHA-256 calculation + optional expected-hash comparison implemented. Generic/resumable download engine & UI integration planned; **automatic official Microsoft endpoint resolution is not fully automated** (must remain official-only, no hardcoded expiring URLs, no third-party substitution). |
-| Phase 4 Bootable USB | **In progress (safety-first)** | Planning/validation architecture and guarded execution design to be implemented with strict confirmations, system-disk rejection, device revalidation, and Linux-tool checks. **No automatic formatting/writing.** Destructive execution requires explicit user confirmation and a supported Linux environment; mock-tested. |
-| Phase 5 Polish/packaging | **Planned** | Final UX/error recovery notes, docs, packaging metadata verification. |
+| Phase 3 ISO management | **Done (safety constraints apply)** | Local ISO selection/inspection, streaming SHA-256 calculation + optional expected-hash comparison, resumable HTTP(S) download engine/UI with explicit official-source/user-responsibility warnings. **Automatic official Microsoft endpoint resolution is not fully automated** (must remain official-only, no hardcoded expiring URLs, no third-party substitution). |
+| Phase 4 Bootable USB | **Done (planning/guarded)** | Planning/validation, explicit confirmation (typed target path), system-disk/identity/mount/read-only checks, revalidation-aware design, and fail-closed guarded execution. **No automatic formatting/writing.** Real destructive writes are **not enabled** pending verified Linux hardware testing. Bootability **not claimed** without verification. |
+| Phase 5 Polish/packaging | **Done (baseline)** | Docs/README/architecture updated, known limitations recorded, tests passing, venv workflow documented. |
 
 ## Completed
 
@@ -59,7 +59,11 @@ This log tracks what has been implemented, what is in progress, and what remains
 - Updated README/architecture to reflect safety-gated completion, limitations (official Microsoft auto-download not fully automated; destructive writes not enabled pending verified Linux hardware testing; bootability not claimed).
 - Full test suite: **31 passed** (`pytest -q`).
 
-## Will do / maintenance
+### 2026-11-09 — Finalized
+- Working tree clean; full test suite **31 passed**; GUI smoke test passed.
+- Project finalized in a **safety-gated** state: safe UI/detection/ISO/verification/planning workflows implemented; destructive USB execution and official bootability remain intentionally gated/unclaimed pending verified Linux hardware validation.
+
+## Will do / maintenance (if continuing)
 
 - Keep `LOG.md` updated for any future changes and push frequently.
 - Validate on real Linux hardware/disposable USB media before enabling any destructive execution path.
