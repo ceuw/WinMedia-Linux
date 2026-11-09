@@ -40,10 +40,14 @@ This log tracks what has been implemented, what is in progress, and what remains
 ### 2026-11-09 — Logging/process
 - Added this `LOG.md` to make progress explicit and support frequent updates/pushes.
 
+### 2026-11-09 — Download engine (core)
+- Implemented `core.downloader` (stdlib `urllib`, http/https only): `.part` temp file, resume via HTTP `Range` when supported, progress callback (bytes/total/speed), cancellation, timeouts, safe final rename. No official Microsoft URL resolution; callers must follow official-source policy.
+- Added `tests/test_downloader.py` (mocked HTTP, no network).
+
 ## In progress / planned next (to finish responsibly)
 
 1. **LOG maintenance** — update this file after each meaningful increment; commit/push frequently.
-2. **Download engine (Phase 3)** — implement a safe HTTP downloader core: destination selection, resumable Range support where available, progress/speed/ETA, cancellation, timeout/error handling, temp/partial file handling. Integrate with UI. Keep **official Microsoft-only** policy explicit. If full official endpoint resolution is not verified/implemented, provide clear status and do not silently use unofficial sources; any user-supplied URL path (if added) must carry prominent warnings and never be presented as the official Microsoft workflow.
+2. **Download UI integration (Phase 3)** — integrate downloader into GUI with destination selection/progress/speed/ETA/cancel. Keep **official Microsoft-only** policy explicit. Automatic official endpoint resolution remains unverified/unimplemented; do not silently use unofficial sources. If an advanced explicit-URL field is added, label it with prominent user-responsibility warnings (never the official Microsoft workflow).
 3. **Shared app state** — keep selected ISO/device state consistent across pages (non-destructive).
 4. **Bootable USB planning/execution (Phase 4, safety-first)** — implement:
    - plan builder (source ISO, target device, partition/FS/boot mode options) with validation;
