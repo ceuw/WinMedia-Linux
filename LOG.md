@@ -71,6 +71,9 @@ This log tracks what has been implemented, what is in progress, and what remains
 - **Process/docs updated**: `AGENTS.md` reinforced to require **frequent `LOG.md` updates** and **very frequent pushes to GitHub**; `HANDOFF.md` and `LOG.md` refreshed to current repo/release/issue/license state.
 - **Arch packaging template**: briefly added then removed at user request (`nvm delete the packaging`). Use the GitHub releases/source and platform packaging guidance if revisited.
 
+### 2026-11-09 — Repository presentation
+- Added project logo banner (`assets/images/Logo-banner.png`) and referenced it at the top of `README.md`.
+
 ## Maintenance (if continuing)
 
 - Keep `LOG.md` and `HANDOFF.md` updated for any future changes and push frequently.

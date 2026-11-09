@@ -1,3 +1,5 @@
+![WinMedia Linux](assets/images/Logo-banner.png)
+
 # WinMedia Linux
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
