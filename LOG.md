@@ -54,11 +54,17 @@ This log tracks what has been implemented, what is in progress, and what remains
 - `execute_guarded()` is **fail-closed**: dry-run reports validation with no disk writes; non-dry-run execution is refused on non-Linux and by an explicit safety gate in this build (no destructive writes enabled without verified Linux hardware testing). No automatic formatting/writing.
 - Added `tests/test_usb_manager.py` (planning, safety rejection, identity mismatch, dry-run, execution refusal). All 31 tests pass.
 
-## In progress / planned next (to finish responsibly)
+### 2026-11-09 — Phase 4 USB GUI + project completion (safety-gated)
+- Integrated USB page: ISO selection, detected device selection, boot/scheme/FS options, plan preview (dry run), explicit confirmation by typing target device path, and guarded creation request. UI clearly states destructive execution is fail-closed/safety-gated.
+- Updated README/architecture to reflect safety-gated completion, limitations (official Microsoft auto-download not fully automated; destructive writes not enabled pending verified Linux hardware testing; bootability not claimed).
+- Full test suite: **31 passed** (`pytest -q`).
 
-1. **LOG maintenance** — update this file after each meaningful increment; commit/push frequently.
-2. **Phase 4 USB GUI** — integrate ISO+device selection, plan preview, explicit confirmation (device token), and guarded execute/dry-run results in the USB page.
-3. **Final polish/docs** — update README/architecture status, known limitations, and finish notes; run full tests.
+## Will do / maintenance
+
+- Keep `LOG.md` updated for any future changes and push frequently.
+- Validate on real Linux hardware/disposable USB media before enabling any destructive execution path.
+- Implement verified official Microsoft download endpoint resolution only if it can be done reliably and in compliance with source policy (no hardcoded expiring URLs, no third-party substitution).
+- Add stronger post-write verification/boot checks when execution is implemented on Linux.
 3. **Shared app state** — keep selected ISO/device state consistent across pages (non-destructive).
 4. **Bootable USB planning/execution (Phase 4, safety-first)** — implement:
    - plan builder (source ISO, target device, partition/FS/boot mode options) with validation;

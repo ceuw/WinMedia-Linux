@@ -2,15 +2,15 @@
 
 WinMedia Linux is a **Linux-native** desktop application for creating Windows installation media, inspired by Microsoft's Windows Media Creation Tool.
 
-> **Status: Phase 1–3 progress** — the GUI foundation, navigation, themes, logging, and dependency checks are implemented. **Read-only USB/storage device detection** is implemented (Linux `lsblk` scan, device details, safety flags, selection UI). **Local ISO selection and local SHA-256 calculation/comparison** are implemented. **Automatic official Microsoft ISO download resolution** and **bootable USB creation/writing** are not implemented yet. No devices are formatted, partitioned, or modified.
+> **Status: Implementation complete (safety-gated)** — the GUI foundation, themes, logging, dependency checks, read-only USB detection, local ISO selection, SHA-256 verification, a resumable download engine (with explicit source-responsibility warnings), and **USB creation planning/validation** are implemented with tests. **Automatic official Microsoft ISO download resolution is not fully automated** (official-source policy enforced; no third-party substitution). **Destructive USB write execution is fail-closed/safety-gated** in this build and requires verified Linux hardware testing before enabling real disk writes. No devices are formatted/modified automatically. Bootability is **not claimed** without appropriate verification.
 
-## Goals
+## Goals / implementation status
 
-- Download **official** Windows 10/11 installation ISOs from Microsoft (planned; automatic official download workflow not yet implemented). Local ISO selection is available.
-- Create bootable Windows USB drives with UEFI/BIOS compatibility considerations (planned).
-- Detect removable USB devices safely (read-only detection/validation UI implemented; Linux target).
-- Handle large Windows installation files (e.g., FAT32 `install.wim` limits) using safe approaches (planned).
-- Verify ISO integrity with SHA-256 (local calculation and optional user-provided checksum comparison implemented; not a standalone authenticity proof).
+- **Official Windows ISO sources**: policy enforced (official Microsoft sources only; never silently substitute third-party ISOs). Automatic endpoint resolution is **not fully automated**; advanced explicit-URL download is available with prominent user-responsibility warnings.
+- **Local ISO selection**: implemented.
+- **SHA-256 verification**: local streaming calculation + optional user-provided checksum comparison implemented. Not a standalone authenticity proof.
+- **USB device detection**: read-only Linux `lsblk`-based detection, safety flags, and review-only selection implemented (sysfs/transport properties; **not** inferred from `/dev/sdX` names).
+- **Bootable USB creation**: planning/validation, explicit confirmation (type target device path), system-disk/identity/mount/read-only checks, and fail-closed guarded execution implemented. **Real destructive writes are safety-gated/not enabled in this build** pending verified Linux hardware testing. Large-WIM/FAT32 planning notes included. Bootability is **not claimed** without verification.
 
 ## Safety
 
