@@ -2,13 +2,13 @@
 
 WinMedia Linux is a **Linux-native** desktop application for creating Windows installation media, inspired by Microsoft's Windows Media Creation Tool.
 
-> **Status: Phase 1 (Foundation)** — the GUI foundation, navigation, themes, logging, and dependency checks are implemented. **Windows ISO download and bootable USB creation are not implemented yet.** No USB devices are scanned, formatted, or modified in this phase.
+> **Status: Phase 1–2 progress** — the GUI foundation, navigation, themes, logging, and dependency checks are implemented. **Read-only USB/storage device detection** is implemented (Linux `lsblk` scan, device details, safety flags, selection UI). **Windows ISO download and bootable USB creation/writing are not implemented yet.** No devices are formatted, partitioned, or modified.
 
 ## Goals
 
 - Download **official** Windows 10/11 installation ISOs from Microsoft (planned).
 - Create bootable Windows USB drives with UEFI/BIOS compatibility considerations (planned).
-- Detect removable USB devices safely (planned).
+- Detect removable USB devices safely (read-only detection/validation UI implemented; Linux target).
 - Handle large Windows installation files (e.g., FAT32 `install.wim` limits) using safe approaches (planned).
 - Verify ISO integrity with SHA-256 (planned).
 
