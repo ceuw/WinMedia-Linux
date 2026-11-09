@@ -1,69 +1,96 @@
 # WinMedia Linux
 
-WinMedia Linux is a **Linux-native** desktop application for creating Windows installation media, inspired by Microsoft's Windows Media Creation Tool.
+**WinMedia Linux** is a Linux-native desktop application for working with Windows installation media workflows, inspired by Microsoft’s Windows Media Creation Tool. It is built with **Python 3.11+** and **PySide6 (Qt)**.
 
-> **Status: Implementation complete (safety-gated)** — GUI, themes, logging, dependency checks, read-only USB detection, local ISO selection, SHA-256 verification, a resumable download engine (with explicit source-responsibility warnings), and USB creation planning/validation are implemented with tests. **Automatic official Microsoft ISO endpoint resolution is not fully automated** (official-source policy enforced; no third-party ISO substitution). **Destructive USB write execution is fail-closed/safety-gated** in this build and requires verified Linux hardware testing before enabling real disk writes. No devices are formatted or modified automatically. **Bootability is not claimed** without appropriate verification.
+> [!IMPORTANT]
+> **Safety-gated foundation release.** This project prioritizes user data safety. Destructive USB operations (partitioning, formatting, writing, boot setup) are **not enabled** in the current build. The application does **not** format or overwrite devices automatically, does **not** claim bootability without appropriate verification, and must be validated on **real Linux hardware with disposable media** before any future destructive execution is enabled.
 
-## Implementation status
+## Project status
 
-- **Official Windows ISO sources**: official Microsoft sources only; never silently substitute third-party ISOs. Automatic endpoint resolution is **not fully automated**. Advanced explicit-URL download is available with prominent user-responsibility warnings and confirmation.
-- **Local ISO selection**: implemented.
-- **SHA-256 verification**: local streaming calculation + optional user-provided checksum comparison. A match does **not** by itself prove the image is an official Microsoft ISO.
-- **USB device detection** (Linux): read-only `lsblk`-based detection, safety flags, and review-only selection. Removable/USB hints come from sysfs/transport properties — **never** inferred from `/dev/sdX` names alone.
-- **Bootable USB creation**: planning/validation, explicit confirmation (type target device path), system-disk/identity/mount/read-only checks, and fail-closed guarded execution. Real destructive writes are **not enabled** in this build pending verified Linux hardware testing. Large-WIM/FAT32 planning notes are included.
+| Area | Status | Notes |
+|---|---|---|
+| GUI foundation | Implemented | PySide6 app shell, sidebar navigation, dark/light themes, structured logging, dependency checks. |
+| USB device detection | Implemented (read-only) | Linux `lsblk --json --bytes` inspection with safety flags and review-only selection. Removable/USB hints use sysfs/transport properties — **never inferred from `/dev/sdX` names alone**. |
+| ISO management | Implemented (policy-constrained) | Local ISO selection/inspection, streaming SHA-256 verification, resumable HTTP(S) download engine/UI. **Automatic official Microsoft endpoint resolution is not fully automated.** |
+| Bootable USB creation | Planning/guarded only | Validation, device identity checks, mount/system-disk/read-only guards, WIM/FAT32/boot planning notes, explicit typed-path confirmation, and **fail-closed** guarded execution. **No real disk writes in this build.** |
+| Packaging / distribution | Baseline | Development workflow documented; packaging optimization can be expanded. |
 
-## Safety
+## Key capabilities
 
-- The application does **not** run as root for normal startup.
-- Destructive disk operations are **never** automatic.
-- Before any future real write operation, the user must see device model/path/capacity and give explicit confirmation; the device must be revalidated.
-- System disks and critical mount targets are rejected by design.
-- See `AGENTS.md` for the full safety/development contract and `LOG.md` for progress/limitations.
+- **Read-only device awareness:** surfaces model, path, capacity, filesystem/mount context, and safety flags without modifying disks.
+- **Local ISO verification:** computes SHA-256 with progress and supports optional user-provided checksum comparison.
+  - A matching hash helps detect corruption/mismatch against a value you trust, but a local hash alone does **not** prove an image is an official Microsoft ISO.
+- **Resumable downloads (advanced):** HTTP(S) downloads with `.part` resume support (when the server supports ranges), progress/speed/ETA, and cancellation.
+  - Users are responsible for ensuring any provided URL is an **official Microsoft source**. The project does **not** silently substitute third-party ISOs.
+- **Safety-first USB planning:** previews a plan and requires explicit confirmation before any future execution path; execution remains fail-closed in this build.
+
+## Safety principles
+
+This repository follows the development/safety contract in [`AGENTS.md`](AGENTS.md):
+
+- Never format or overwrite a device automatically.
+- Never perform destructive operations without explicit user confirmation and device revalidation.
+- Reject system disks and critical mount targets by design.
+- Use argument-array process execution (no unsanitized shell command construction).
+- Do not require root privileges for normal application startup.
+- Use official Microsoft sources only for Windows downloads; do not hardcode temporary/unauthorized URLs or use third-party ISOs.
+- Do not claim USB bootability without appropriate verification.
 
 ## Requirements
 
-- Python **3.11+**
-- **PySide6** (Qt for Python)
-- A graphical desktop session for normal use (X11/Wayland on Linux; Windows/macOS can run the UI for development/testing, but Linux is the target platform)
+- **Python:** 3.11+
+- **GUI framework:** [PySide6](https://doc.qt.io/qtforpython-6/)
+- **Target platform:** Linux (X11/Wayland). The UI may run on other platforms for development/testing, but Linux system tools and device behavior are required for device-related functionality.
 
-Linux system tools (reported in **Settings → Dependency check**): `lsblk`, `udisksctl`/UDisks2, `parted`, `blkid`, `mount`/`umount`, `wimlib-imagex` (wimtools). These are needed for Linux device detection and future USB operations.
+### Linux system tools
+
+The **Settings → Dependency check** page reports availability of common tools used for Linux integration (current and planned), such as:
+
+`lsblk`, `udisksctl`/UDisks2, `parted`, `blkid`, `mount`/`umount`, `wimlib-imagex` (wimtools)
+
+Install missing tools using your distribution’s package manager.
 
 ## Installation (development)
 
 ```bash
-# From the project root
+# Clone the repository
+git clone https://github.com/ceuw/WinMedia-Linux.git
+cd WinMedia-Linux
+
+# Create and activate a virtual environment
 python -m venv .venv
 
-# Activate the virtual environment
-# Linux/macOS:
+# Linux/macOS
 source .venv/bin/activate
-# Windows PowerShell:
-# .\.venv\Scripts\Activate.ps1
-# Windows cmd:
-# .venv\Scripts\activate.bat
 
+# Windows PowerShell (development/testing)
+# .\.venv\Scripts\Activate.ps1
+
+# Install dependencies
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-# or editable install with dev tools:
-python -m pip install -e .[dev]
+
+# Optional: editable install with dev/test tools
+python -m pip install -e ".[dev]"
 ```
 
-## Launch
+## Usage
 
 ```bash
-# Recommended (works without editable scripts):
+# Run the application
 python -m winmedia
 
-# If installed editable:
+# If installed as an editable/script entry point
 winmedia
 
-# Smoke test (creates UI, exits automatically; useful for checks)
+# UI smoke test (creates the UI and exits)
 python -m winmedia --smoke-test
-# Headless Linux (if supported by Qt):
+
+# Headless environments (where supported by Qt)
 QT_QPA_PLATFORM=offscreen python -m winmedia --smoke-test
 ```
 
-## Tests
+## Testing
 
 ```bash
 python -m pytest -q
@@ -71,10 +98,51 @@ python -m pytest -q
 
 GUI smoke tests use `pytest-qt` (offscreen where supported).
 
-## Project layout
+## Repository layout
 
-Source code lives under `src/winmedia/` with separation between `gui/`, `core/`, `services/`, and `utils/`. See `AGENTS.md` (development contract), `docs/architecture.md`, and `LOG.md`.
+```text
+.
+├── AGENTS.md                 # Development/safety contract
+├── README.md
+├── LICENSE                   # GPL-3.0-or-later
+├── pyproject.toml
+├── requirements.txt
+├── docs/
+│   ├── architecture.md
+│   ├── installation.md
+│   └── troubleshooting.md
+├── src/winmedia/
+│   ├── gui/                  # PySide6 UI
+│   ├── core/                 # ISO/download/verification and USB planning/guards
+│   ├── services/             # Dependency checks, read-only detection, privilege stubs
+│   └── utils/                # Logging, paths, validators
+└── tests/
+```
+
+## Documentation
+
+- [`AGENTS.md`](AGENTS.md) — project contract, safety rules, and workflow
+- [`docs/architecture.md`](docs/architecture.md) — module boundaries and safety notes
+- [`docs/installation.md`](docs/installation.md) — installation guidance
+- [`docs/troubleshooting.md`](docs/troubleshooting.md) — common issues
+- [`HANDOFF.md`](HANDOFF.md) — maintainer/session handoff notes
+- [`LOG.md`](LOG.md) — development progress and limitations
+
+## Known limitations
+
+- **Official Microsoft download automation:** not fully automated. The project must not hardcode expiring/unauthorized URLs or use third-party ISOs.
+- **Destructive USB execution:** fail-closed/safety-gated in this build. Real hardware behavior and bootability require validation on Linux with disposable media.
+- **Bootability:** not claimed without appropriate verification.
+- **Development environment variance:** Linux device/runtime behavior should be validated on supported Linux systems.
+
+## Contributing
+
+Contributions should follow [`AGENTS.md`](AGENTS.md): prioritize data safety, keep changes maintainable, add/update tests, and document behavior and limitations clearly. Do not introduce automatic destructive disk operations or unverified bootability claims.
 
 ## License
 
-GPL-3.0-or-later (see `LICENSE`).
+Licensed under **GPL-3.0-or-later**. See [`LICENSE`](LICENSE).
+
+## Disclaimer
+
+WinMedia Linux is an independent project and is **not affiliated with or endorsed by Microsoft**. Windows is a trademark of Microsoft Corporation. Users are responsible for complying with applicable licenses and terms when obtaining and using Windows installation media.
