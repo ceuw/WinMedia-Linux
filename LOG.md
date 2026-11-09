@@ -44,10 +44,15 @@ This log tracks what has been implemented, what is in progress, and what remains
 - Implemented `core.downloader` (stdlib `urllib`, http/https only): `.part` temp file, resume via HTTP `Range` when supported, progress callback (bytes/total/speed), cancellation, timeouts, safe final rename. No official Microsoft URL resolution; callers must follow official-source policy.
 - Added `tests/test_downloader.py` (mocked HTTP, no network).
 
+### 2026-11-09 — Download UI integration (Phase 3 partial)
+- Integrated advanced explicit-URL download in GUI with destination picker, source-responsibility confirmation, progress/speed/ETA, and cancel. **Warning labels state user must ensure URL is an official Microsoft source; not the automated official workflow.** Official auto-resolution remains unimplemented.
+- Wrapped navigation pages in scroll areas for accessibility/polish.
+- All 26 tests pass.
+
 ## In progress / planned next (to finish responsibly)
 
 1. **LOG maintenance** — update this file after each meaningful increment; commit/push frequently.
-2. **Download UI integration (Phase 3)** — integrate downloader into GUI with destination selection/progress/speed/ETA/cancel. Keep **official Microsoft-only** policy explicit. Automatic official endpoint resolution remains unverified/unimplemented; do not silently use unofficial sources. If an advanced explicit-URL field is added, label it with prominent user-responsibility warnings (never the official Microsoft workflow).
+2. **Phase 4 safety-first bootable USB (finish core)** — implement plan/validation/confirmation architecture and guarded Linux execution scaffolding (no auto-format/write), with mock-tested command planning and strict safety gates. Real hardware bootability requires Linux validation.
 3. **Shared app state** — keep selected ISO/device state consistent across pages (non-destructive).
 4. **Bootable USB planning/execution (Phase 4, safety-first)** — implement:
    - plan builder (source ISO, target device, partition/FS/boot mode options) with validation;

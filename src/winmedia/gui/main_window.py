@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QMainWindow,
     QPushButton,
+    QScrollArea,
     QStackedWidget,
     QVBoxLayout,
     QWidget,
@@ -155,7 +156,11 @@ class MainWindow(QMainWindow):
             ("Settings", self.settings_page),
         ]
         for i, (label, widget) in enumerate(pages):
-            self.stack.addWidget(widget)
+            scroll = QScrollArea()
+            scroll.setWidgetResizable(True)
+            scroll.setFrameShape(QFrame.NoFrame)
+            scroll.setWidget(widget)
+            self.stack.addWidget(scroll)
             btn = QPushButton(label)
             btn.setProperty("class", "nav")
             btn.setCursor(Qt.PointingHandCursor)
